@@ -1,5 +1,5 @@
 const db = require("../models");
-const Tutorial = db.tutorials;
+const Tutorial = db.albums;
 const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   const tutorial = {
     title: req.body.title,
     description: req.body.description,
-    published: req.body.published ? req.body.published : false
+    //published: req.body.published ? req.body.published : false
   };
   // Save Tutorial in the database
   Tutorial.create(tutorial)
