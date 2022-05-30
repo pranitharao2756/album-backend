@@ -10,6 +10,6 @@ module.exports = (sequelize, Sequelize) => {
     }
   );
   const Track = require("./tracks.model.js")(sequelize, Sequelize);
-  Album.belongsTo(Track)
-  return Album;
+  Track.belongsTo(Album)
+  return {Album,Track};
 };
