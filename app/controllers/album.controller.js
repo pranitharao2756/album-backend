@@ -1,5 +1,5 @@
 const db = require("../models");
-const Tutorial = db.albums;
+const Album = db.albums;
 const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
@@ -17,7 +17,7 @@ exports.create = (req, res) => {
     //published: req.body.published ? req.body.published : false
   };
   // Save Tutorial in the database
-  Tutorial.create(tutorial)
+  Album.create(tutorial)
     .then(data => {
       res.send(data);
     })
@@ -32,7 +32,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   const title = req.query.title;
   var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
-  Tutorial.findAll({ where: condition })
+  Album.findAll({ where: condition })
     .then(data => {
       res.send(data);
     })
@@ -46,7 +46,7 @@ exports.findAll = (req, res) => {
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
   const id = req.params.id;
-  Tutorial.findByPk(id)
+  Album.findByPk(id)
     .then(data => {
       if (data) {
         res.send(data);
@@ -65,7 +65,7 @@ exports.findOne = (req, res) => {
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Tutorial.update(req.body, {
+  Album.update(req.body, {
     where: { id: id }
   })
     .then(num => {
@@ -88,7 +88,7 @@ exports.update = (req, res) => {
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
-  Tutorial.destroy({
+  Album.destroy({
     where: { id: id }
   })
     .then(num => {
@@ -110,7 +110,7 @@ exports.delete = (req, res) => {
 };
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
-  Tutorial.destroy({
+  Album.destroy({
     where: {},
     truncate: false
   })
@@ -121,19 +121,6 @@ exports.deleteAll = (req, res) => {
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all tutorials."
-      });
-    });
-};
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-  Tutorial.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
       });
     });
 };
