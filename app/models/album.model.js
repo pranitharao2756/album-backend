@@ -6,7 +6,6 @@ module.exports = (sequelize, Sequelize) => {
     description: {
       type: Sequelize.STRING
     },
-      
     }
   );
   const Track = require("./tracks.model.js")(sequelize, Sequelize);
