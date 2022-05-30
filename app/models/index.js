@@ -12,7 +12,11 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   }
 });
 const db = {};
+var temp = {};
+
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-db.albums = require("./album.model.js")(sequelize, Sequelize);
+temp = require("./album.model.js")(sequelize,Sequelize);
+db.albums = temp.Album;
+db.tracks = temp.track;
 module.exports = db;
