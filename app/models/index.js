@@ -18,5 +18,5 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 temp = require("./album.model.js")(sequelize,Sequelize);
 db.albums = temp.Album;
-db.tracks = temp.track;
+db.tracks = temp.Track;
 module.exports = db;
