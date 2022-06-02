@@ -15,6 +15,10 @@ module.exports = app => {
 
   router.put("/:albumid/tracks/:trackid", tracks.update);
 
+  router.delete("/:albumid/tracks",tracks.deleteAll);
+
+  router.delete("/:albumid/tracks/:trackid",tracks.delete);
+
   // Retrieve all Albums
   router.get("/", albums.findAll);
   

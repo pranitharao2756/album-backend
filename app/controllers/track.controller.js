@@ -90,7 +90,7 @@ exports.update = (req, res) => {
 };
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.trackid;
   Track.destroy({
     where: { id: id }
   })
@@ -113,12 +113,13 @@ exports.delete = (req, res) => {
 };
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
+    const id = req.params.albumid;
     Track.destroy({
-    where: {},
+    where: {albumId: id},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Tutorials were deleted successfully!` });
+      res.send({ message: `${nums} Tracks were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({
