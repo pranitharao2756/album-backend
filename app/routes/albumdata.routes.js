@@ -11,6 +11,10 @@ module.exports = app => {
   //Find tracks present in an album
   router.get("/:albumid/tracks", tracks.findTracks);
 
+  router.get("/:albumid/tracks/:trackid", tracks.findOne);
+
+  router.put("/:albumid/tracks/:trackid", tracks.update);
+
   // Retrieve all Albums
   router.get("/", albums.findAll);
   

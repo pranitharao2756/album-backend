@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
 };
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.trackid;
   Track.findByPk(id)
     .then(data => {
       if (data) {
@@ -67,14 +67,14 @@ exports.findOne = (req, res) => {
 };
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const trackid = req.params.trackid;
   Track.update(req.body, {
-    where: { id: id }
+    where: { id: trackid }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully."
+          message: "Track was updated successfully."
         });
       } else {
         res.send({
