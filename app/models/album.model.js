@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
   const Album = sequelize.define("album", {
+    image:{
+      type:Sequelize.STRING
+    },
     title: {
       type: Sequelize.STRING
     },

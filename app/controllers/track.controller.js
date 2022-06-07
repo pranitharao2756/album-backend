@@ -48,7 +48,7 @@ exports.findAll = (req, res) => {
 };
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.trackid;
   Track.findByPk(id)
     .then(data => {
       if (data) {
@@ -67,14 +67,14 @@ exports.findOne = (req, res) => {
 };
 // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
-  const id = req.params.id;
+  const trackid = req.params.trackid;
   Track.update(req.body, {
-    where: { id: id }
+    where: { id: trackid }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Tutorial was updated successfully."
+          message: "Track was updated successfully."
         });
       } else {
         res.send({
@@ -90,7 +90,7 @@ exports.update = (req, res) => {
 };
 // Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
-  const id = req.params.id;
+  const id = req.params.trackid;
   Track.destroy({
     where: { id: id }
   })
@@ -113,12 +113,13 @@ exports.delete = (req, res) => {
 };
 // Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
+    const id = req.params.albumid;
     Track.destroy({
-    where: {},
+    where: {albumId: id},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Tutorials were deleted successfully!` });
+      res.send({ message: `${nums} Tracks were deleted successfully!` });
     })
     .catch(err => {
       res.status(500).send({

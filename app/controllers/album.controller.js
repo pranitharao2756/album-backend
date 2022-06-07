@@ -1,4 +1,6 @@
 const db = require("../models");
+const multer = require("multer");
+const path = require("path");
 const Album = db.albums;
 const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
@@ -11,13 +13,14 @@ exports.create = (req, res) => {
     return;
   }
   // Create a Tutorial
-  const tutorial = {
+  const album = {
     title: req.body.title,
     description: req.body.description,
-    //published: req.body.published ? req.body.published : false
+    image:req.file.path
+    
   };
   // Save Tutorial in the database
-  Album.create(tutorial)
+  Album.create(album)
     .then(data => {
       res.send(data);
     })
@@ -124,3 +127,26 @@ exports.deleteAll = (req, res) => {
       });
     });
 };
+
+const storage = multer.diskStorage({
+  destination: (req,file,callback) =>{
+    callback(null,"../album-frontend/Images");
+  },
+  filename: (req,file,callback) =>{
+      callback(null, Date.now() + path.extname(file.originalname));
+  }
+})
+
+exports.upload = multer({
+storage: storage,
+limits: { fileSize: '5000000'},
+fileFilter: (req,file,callback) =>{
+const fileType = /jpeg|jpg|png/
+const mimeType = fileType.test(file.mimetype);
+const extname = fileType.test(path.extname(file.originalname))
+if(mimeType && extname){
+  return callback(null,true)
+}
+callback("File format not supported")
+}
+}).single('image')
