@@ -3,7 +3,7 @@ module.exports = app => {
   const tracks = require("../controllers/track.controller.js");
   var router = require("express").Router();
   // Create a new Album
-  router.post("/", albums.create);
+  router.post("/",albums.upload,albums.create);
 
   // Create a new Track
   router.post("/:albumid/tracks", tracks.createTrack);
