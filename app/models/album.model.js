@@ -15,5 +15,5 @@ module.exports = (sequelize, Sequelize) => {
   const Artist = require("./artist.model.js")(sequelize, Sequelize);
   Track.belongsTo(Album)
   Album.belongsTo(Artist)
-  return {Album,Track,Album};
+  return {Album,Track,Artist};
 };

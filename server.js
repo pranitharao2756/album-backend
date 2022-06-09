@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/../album-frontend/Images',express.static('./../album-frontend/Images'));
+
+app.use('/../album-frontend/Images/artists',express.static('./../album-frontend/Images/artists'));
 // set up database 
 const db = require("./app/models");
 db.sequelize.sync();

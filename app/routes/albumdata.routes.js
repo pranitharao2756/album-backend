@@ -1,12 +1,20 @@
 module.exports = app => {
   const albums = require("../controllers/album.controller.js");
   const tracks = require("../controllers/track.controller.js");
+  const artists = require("../controllers/artist.controller.js");
+
   var router = require("express").Router();
   // Create a new Album
   router.post("/",albums.upload,albums.create);
 
   // Create a new Track
   router.post("/:albumid/tracks", tracks.createTrack);
+
+   // Create a new Artist
+  router.post("/artists",artists.upload,artists.create);
+
+  // Retrieve a single artist with id
+  router.get("/artists/:artistid", artists.findOne);
 
   //Find tracks present in an album
   router.get("/:albumid/tracks", tracks.findTracks);
