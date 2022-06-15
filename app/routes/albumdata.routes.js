@@ -47,8 +47,6 @@ module.exports = app => {
   // Create a new Track
   router.post("/albums/:albumid/tracks", tracks.createTrack);
 
-  
-
   //Find tracks present in an album
   router.get("/albums/:albumid/tracks", tracks.findTracks);
 
