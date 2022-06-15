@@ -31,6 +31,21 @@ exports.create = (req, res) => {
     });
 };
 
+exports.findAll = (req, res) => {
+  const name = req.query.name;
+  var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+  Artist.findAll({ where: condition })
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving tutorials."
+      });
+    });
+};
+
 // Find a single artist with an id
 exports.findOne = (req, res) => {
   const id = req.params.artistid;
@@ -47,6 +62,47 @@ exports.findOne = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message: "Error retrieving Tutorial with id=" + id
+      });
+    });
+};
+
+// Delete a Artist with the specified id in the request
+exports.delete = (req, res) => {
+  const id = req.params.id;
+  
+  Artist.destroy({
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Artist was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete Artist with id=${id}. Maybe Artist was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Artist with id=" + id
+      });
+    });
+};
+
+exports.deleteAll = (req, res) => {
+  Artist.destroy({
+    where: {},
+    truncate: false
+  })
+    .then(nums => {
+      res.send({ message: `${nums} Artists were deleted successfully!` });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while removing all artists."
       });
     });
 };
