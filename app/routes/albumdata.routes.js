@@ -1,34 +1,65 @@
 module.exports = app => {
   const albums = require("../controllers/album.controller.js");
   const tracks = require("../controllers/track.controller.js");
+  const artists = require("../controllers/artist.controller.js");
+
   var router = require("express").Router();
-  // Create a new Album
-  router.post("/",albums.upload,albums.create);
+  // Create a new Artist
+  router.post("/",artists.upload,artists.create);
+
+
+  //Delete API for artists
+  router.delete("/", artists.deleteAll);
+
+  router.delete("/:id",artists.delete)
+
+  // Retrieve all artists
+  router.get("/", artists.findAll);
+  
+    // Retrieve artist with artist id
+  router.get("/:artistid", artists.findOne);
+
+  //Update artist information.
+  router.put("/:id", artists.upload,artists.update);
+
+    // Create a new Album
+  router.post("/:artistid/albums", albums.upload,albums.create);
+  
+  // Retrieve album with album id
+  router.get("/:artistid/albums/:albumid", albums.findOne);
+
+  // Retrieve all albums assigned to artist
+  router.get("/:artistid/albums", albums.findAlbums);
+  
+  //Search album
+  router.get("/:artistid/search/:title", albums.findAll);
+
+  router.get("/albums/:albumid",albums.findOne);
+  
+  //Update album information
+  router.put("/:artistid/albums/:albumid", albums.upload,albums.update);
+
+  //Delete rest API for albums
+  router.delete("/albums/:id",albums.delete)
+
+  router.delete("/albums/delete/all",albums.deleteAll)
 
   // Create a new Track
-  router.post("/:albumid/tracks", tracks.createTrack);
+  router.post("/albums/:albumid/tracks", tracks.createTrack);
 
   //Find tracks present in an album
-  router.get("/:albumid/tracks", tracks.findTracks);
+  router.get("/albums/:albumid/tracks", tracks.findTracks);
 
-  router.get("/:albumid/tracks/:trackid", tracks.findOne);
+  //Find a track with trackid.
+  router.get("/albums/:albumid/tracks/:trackid", tracks.findOne);
 
-  router.put("/:albumid/tracks/:trackid", tracks.update);
+  //Update track information
+  router.put("/albums/:albumid/tracks/:trackid", tracks.update);
 
-  router.delete("/:albumid/tracks",tracks.deleteAll);
+  //Delete rest api for tracks
+  router.delete("/albums/:albumid/tracks",tracks.deleteAll);
 
-  router.delete("/:albumid/tracks/:trackid",tracks.delete);
-
-  // Retrieve all Albums
-  router.get("/", albums.findAll);
+  router.delete("/albums/:albumid/tracks/:trackid",tracks.delete);
   
-  // Retrieve a single album with id
-  router.get("/:id", albums.findOne);
-  // Update a album with id
-  router.put("/:id", albums.update);
-  // Delete a album with id
-  router.delete("/:id", albums.delete);
-  // Delete all albums
-  router.delete("/", albums.deleteAll);
-  app.use('/api/albums', router);
+  app.use('/api/artists', router);
 };

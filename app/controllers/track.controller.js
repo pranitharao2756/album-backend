@@ -16,9 +16,9 @@ exports.createTrack = (req, res) => {
     title: req.body.title,
     category: req.body.category,
     albumId: req.body.albumId,
-    artist: req.body.artist
+    length: req.body.length
   };
-  console.log(track)
+
   // Save Track in the database
   Track.create(track)
     .then(data => {
