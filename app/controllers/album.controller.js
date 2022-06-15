@@ -65,10 +65,19 @@ exports.findOne = (req, res) => {
       });
     });
 };
-// Update a Tutorial by the id in the request
+// Update a Album by the id in the request
 exports.update = (req, res) => {
   const id = req.params.id;
-  Album.update(req.body, {
+
+  var data = {}
+    if(req.file !== undefined)
+    {
+        data.image = req.file.path;
+    }
+  
+    data.title = req.body.title;
+    data.description = req.body.description
+  Album.update(data, {
     where: { id: id }
   })
     .then(num => {
