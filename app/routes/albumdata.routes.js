@@ -4,8 +4,23 @@ module.exports = app => {
   const artists = require("../controllers/artist.controller.js");
 
   var router = require("express").Router();
-  // Create a new Album
-  router.post("/",albums.upload,albums.create);
+  // Create a new Artist
+  router.post("/",artists.upload,artists.create);
+
+
+  //Delete API for artists
+  router.delete("/", artists.deleteAll);
+
+  router.delete("/:id",artists.delete)
+
+  // Retrieve all artists
+  router.get("/", artists.findAll);
+  
+    // Retrieve artist with artist id
+  router.get("/:artistid", artists.findOne);
+
+  //Update artist information.
+  router.put("/:id", artists.upload,artists.update);
 
   // Create a new Track
   router.post("/:albumid/tracks", tracks.createTrack);
@@ -38,5 +53,5 @@ module.exports = app => {
   router.delete("/:id", albums.delete);
   // Delete all albums
   router.delete("/", albums.deleteAll);
-  app.use('/api/albums', router);
+  app.use('/api/artists', router);
 };

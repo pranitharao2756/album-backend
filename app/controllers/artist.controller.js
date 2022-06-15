@@ -107,6 +107,40 @@ exports.deleteAll = (req, res) => {
     });
 };
 
+// Update a Artist by the id in the request
+exports.update = (req, res) => {
+  const id = req.params.id;
+  var data = {}
+  
+  if(req.file !== undefined)
+  {
+      data.artistimage = req.file.path;
+      
+  }
+  data.name = req.body.name;
+
+  Artist.update(data, {
+    where: { id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Artist was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Artist with id=${id}. Maybe Artist was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Tutorial with id=" + id
+      });
+    });
+};
+
+
 const storage = multer.diskStorage({
   destination: (req,file,callback) =>{
     callback(null,"../album-frontend/Images/artists");
